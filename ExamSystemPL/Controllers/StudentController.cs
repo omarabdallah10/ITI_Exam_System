@@ -22,6 +22,9 @@ namespace ExamSystemPL.Controllers
             var stds= studentRepository.GetAllStudents();
             var exs = examRepository.GetAllExamByStudentId(stdId);
             var ex = examRepository.GetCurrentExamByStudentId(stdId);
+            var questions = examRepository.GetQuestionsByExamId(ex.ExId);
+            var ss =examRepository.GetChoicesByQuestionId(1);
+
 
             return View(stds);
         }

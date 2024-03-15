@@ -18,6 +18,11 @@ namespace BLL.Repository
         {
             context = _context;
         }
+        public Exam GetExamById(int ExamId)
+        {
+            var exam = context.Exams.Include(e=>e.QIds).FirstOrDefault(e => e.ExId == ExamId);
+            return exam;
+        }
 
         public Exam GetCurrentExamByStudentId(int StudentId)
         {
@@ -28,7 +33,6 @@ namespace BLL.Repository
         public List<Exam> GetAllExamByStudentId(int StudentId)
         {
             var stdCourses = context.StudentCourses.Include(c=>c.Crs).Where(c => c.SId == StudentId).ToList();
-
             List<Exam> exams = new List<Exam>();
             foreach (var course in stdCourses)
             {
@@ -38,16 +42,25 @@ namespace BLL.Repository
                     exams.Add(exam);
                 }
             }
-
             return exams;
         }
-        public List<Question> GetQuestionsByExamId()
+
+        public List<Question> GetQuestionsByExamId(int ExamId)
         {
-            return null;
+            var exam = GetExamById(ExamId);
+            var examQuestions = exam.QIds.ToList();
+            for (int i=0; i<examQuestions.Count;i++)
+            {
+                examQuestions[i] = context.Questions.Include(q => q.Ches).FirstOrDefault(s => s.QId == examQuestions[i].QId);
+            }
+            return examQuestions;
         }
-        public List<Choice> GetChoicesByQuestionId()
+
+        public List<Choice> GetChoicesByQuestionId(int QuestId)
         {
-            return null;
+            var Question = context.Questions.Include(q=>q.Ches).FirstOrDefault(s=>s.QId== QuestId);
+            var QuestChoices = Question.Ches.ToList();
+            return QuestChoices;
         }
 
     }

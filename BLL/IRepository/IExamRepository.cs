@@ -11,8 +11,10 @@ namespace BLL.IRepository
 {
     public interface IExamRepository
     {
+        Exam GetExamById(int ExamId);
         List<Exam> GetAllExamByStudentId(int StudentId);
         Exam GetCurrentExamByStudentId(int StudentId);
-
+        List<Question> GetQuestionsByExamId(int ExamId);
+        List<Choice> GetChoicesByQuestionId(int QuestId);
     }
 }
