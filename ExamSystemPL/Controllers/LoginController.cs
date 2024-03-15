@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL.Repository;
+using DAL.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExamSystemPL.Controllers
 {

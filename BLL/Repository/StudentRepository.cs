@@ -1,6 +1,7 @@
 ﻿using BLL.IRepository;
 using DAL.Data;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace BLL.Repository
         {
             return context.Students.ToList();
         }
+
         public Student GetStudentById(int id)
         {
-            throw new NotImplementedException();
+            var std = context.Students.FirstOrDefault(s => s.StdId == id);
+            return std;
         }
 
         public Status CreateStudent(Student student)
@@ -40,7 +43,6 @@ namespace BLL.Repository
         {
             throw new NotImplementedException();
         }
-
 
     }
 }
