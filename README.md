@@ -1,6 +1,6 @@
 # ITI_Exam_System
 
-ITI_Exam_System is a comprehensive online examination system designed to facilitate efficient administration and management of exams. 
+ITI_Exam_System is a comprehensive online examination system designed to facilitate efficient administration and management of exams.
 This system is built using HTML5, CSS3, Bootstrap, jQuery, ASP.NET Core MVC, C#, Entity Framework Core, and LINQ to provide a seamless and user-friendly experience for both instructors and students.
 
 ## Features
@@ -9,7 +9,6 @@ This system is built using HTML5, CSS3, Bootstrap, jQuery, ASP.NET Core MVC, C#,
 - **Exam Answering**:
 - **Exam Correction**:
 
-  
 ## Technologies Used
 
 - **HTML5**: Provides the structure for web pages.
@@ -33,4 +32,4 @@ This system is built using HTML5, CSS3, Bootstrap, jQuery, ASP.NET Core MVC, C#,
 1. As a student, log in to the system using your credentials.
 2. View your profile details and take exams assigned to you.
 3. As an instructor, log in to the system using your credentials.
-4. Perform CRUD operations for Departments, Students, Exams, Questions, Answers, and Correct Exams.
+4. Perform CRUD operations for Departments, Students, Exams, Questions, Answers, and Correct Exams..
