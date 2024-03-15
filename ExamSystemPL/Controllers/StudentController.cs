@@ -14,9 +14,9 @@ namespace ExamSystemPL.Controllers
 
         public IActionResult Index()
         {
-            var std= studentRepository.GetAllStudents();
+            var stds= studentRepository.GetAllStudents();
 
-            return View();
+            return View(stds);
         }
     }
 }

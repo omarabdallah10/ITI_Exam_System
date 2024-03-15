@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Data;
 
-public partial class AppContext : DbContext
+public partial class ITIContext : DbContext
 {
-    public AppContext()
+    public ITIContext()
     {
     }
 
-    public AppContext(DbContextOptions<AppContext> options)
+    public ITIContext(DbContextOptions<ITIContext> options)
         : base(options)
     {
     }
@@ -44,7 +44,8 @@ public partial class AppContext : DbContext
     {
 
     }
-  
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Branch>(entity =>

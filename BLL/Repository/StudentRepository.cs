@@ -1,4 +1,5 @@
 ﻿using BLL.IRepository;
+using DAL.Data;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,27 @@ namespace BLL.Repository
 {
     public class StudentRepository : IStudentRepository
     {
+        private readonly ITIContext context;
+
+        public StudentRepository(ITIContext _context)
+        {
+            context = _context;
+        }
+        public List<Student> GetAllStudents()
+        {
+            return context.Students.ToList();
+        }
+        public Student GetStudentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Status CreateStudent(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Status UpdateStudent(int id, Student student)
         {
             throw new NotImplementedException();
         }
@@ -20,19 +41,6 @@ namespace BLL.Repository
             throw new NotImplementedException();
         }
 
-        public List<Student> GetAllStudents()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Student GetStudentById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Status UpdateStudent(int id, Student student)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
