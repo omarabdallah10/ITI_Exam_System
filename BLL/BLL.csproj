@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Mapper\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

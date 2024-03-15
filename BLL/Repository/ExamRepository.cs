@@ -20,13 +20,14 @@ namespace BLL.Repository
         }
         public Exam GetExamById(int ExamId)
         {
-            var exam = context.Exams.Include(e=>e.QIds).FirstOrDefault(e => e.ExId == ExamId);
+            var exam = context.Exams.Include(e=>e.QIds).Include(e => e.Crs).FirstOrDefault(e => e.ExId == ExamId);
             return exam;
         }
 
         public Exam GetCurrentExamByStudentId(int StudentId)
         {
             var currentExam = GetAllExamByStudentId(StudentId).FirstOrDefault(e => e.Date == DateOnly.FromDateTime(DateTime.Today));
+           
             return currentExam;
         }
 

@@ -11,7 +11,7 @@ namespace BLL.IRepository
     public interface IStudentRepository
     {
         public List<Student> GetAllStudents();
-        public Student GetStudentById(int id);
+        public User GetStudentById(int id);
         public Status DeleteStudentById(int id);
         public Status CreateStudent(Student student);
         public Status UpdateStudent(int id, Student student);

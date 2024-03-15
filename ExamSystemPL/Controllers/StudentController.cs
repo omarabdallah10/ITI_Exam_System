@@ -18,16 +18,25 @@ namespace ExamSystemPL.Controllers
         public IActionResult Index()
         {
             var stdId = 2;
+            var student = studentRepository.GetStudentById(stdId);
+            ViewBag.currentStudent= student;
+            var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
 
-            var stds= studentRepository.GetAllStudents();
-            var exs = examRepository.GetAllExamByStudentId(stdId);
-            var ex = examRepository.GetCurrentExamByStudentId(stdId);
-            var questions = examRepository.GetQuestionsByExamId(ex.ExId);
-            var ss =examRepository.GetChoicesByQuestionId(1);
+            //var Exams = examRepository.GetAllExamByStudentId(stdId);
+            
+            //var questionChoices =examRepository.GetChoicesByQuestionId(1);
 
-
-            return View(stds);
+            return View(currentExam);
         }
+
+        public IActionResult TakeExam(int id)
+        {
+            var stdId = 2;
+            ViewBag.ExamData = examRepository.GetCurrentExamByStudentId(stdId);
+            var questions = examRepository.GetQuestionsByExamId(id);
+            return View(questions);
+        }
+
 
     }
 }

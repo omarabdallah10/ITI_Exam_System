@@ -1,0 +1,52 @@
+﻿@model List<Question>
+
+@{
+    int counter = 1;
+    var duration = @ViewBag.ExamData.Duration as TimeOnly?;
+
+}
+
+
+<div class="container mt-5">
+
+    <div class="card mt-5 mb-2">
+        <div class="card-header bg-info text-dark text-center">
+            <h3>ITI Exam </h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours
+            </p>
+            <p class="card-text">
+                <b>Course Name: @ViewBag.ExamData?.Crs?.CrsName</b>
+            </p>
+        </div>
+
+        <div class="card p-5">
+            <form>
+                @foreach (var question in Model)
+                {
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Question @(counter++)
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@question.QText</h5>
+                            <div class="form-group">
+                                @foreach (var choice in question.Ches)
+                                {
+                                    <div class="form-check">
+                                        <input type="radio" id="@($"choice-{choice.ChId}")" name="question-@question.QId" class="form-check-input" value="@choice.ChId" />
+                                        <label class="form-check-label" for="@($"choice-{choice.ChId}")">@choice.Text</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-dark">Submit Exam</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -23,9 +23,9 @@ namespace BLL.Repository
             return context.Students.ToList();
         }
 
-        public Student GetStudentById(int id)
+        public User GetStudentById(int id)
         {
-            var std = context.Students.FirstOrDefault(s => s.StdId == id);
+            var std = context.Users.FirstOrDefault(s => s.UId == id);
             return std;
         }
 
