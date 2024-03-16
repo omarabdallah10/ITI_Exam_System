@@ -61,12 +61,18 @@ namespace ExamSystemPL.Controllers
             if (status == BLL.Status.Success)
             {
                 // View Grade After Correction
-                
 
-                return RedirectToAction(nameof(Index));
+                Tuple<int,int> totalgrades = examRepository.CalculateTotalGrade(studentExamViewModel);
+
+                return View(nameof(ShowExamGrade), totalgrades);
             }
             // Return To Index
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ShowExamGrade(Tuple<int, int> totalgrade)
+        {
+            return View(totalgrade);
         }
 
     }

@@ -82,6 +82,35 @@ namespace BLL.Repository
             }
             return Status.Failed;
         }
+        public Tuple<int,int> CalculateTotalGrade(StudentExamViewModel studentExamViewModel)
+        {
+         
+            if (studentExamViewModel.QuestionsAnswers.Count > 0)
+            {
+                int totalGrade = 0;
+                int overAllGrade = 0;
+                foreach (var qAnswer in studentExamViewModel.QuestionsAnswers)
+                {
+                    var question = context.Questions.FirstOrDefault(q => q.QId == qAnswer.Key);
+                    var questionModelAns = question.Answer;
+                    overAllGrade += question.Score.Value;
+                    if (questionModelAns == qAnswer.Value )
+                    {
+                        totalGrade += question.Score.Value;
+                    }
+                }
+                SaveExamTotalScore(studentExamViewModel.ExamId, totalGrade);
+                //context.SaveChanges();
+                return new Tuple<int,int >(totalGrade,overAllGrade);
+            }
+            return new Tuple<int, int > (0, 0);
+        }
+        private void SaveExamTotalScore(int ExamId,int TotalScore)
+        {
+            var exam = GetExamById(ExamId);
+            exam.TotalScore = TotalScore;
+            context.SaveChanges();
+        }
 
     }
 }

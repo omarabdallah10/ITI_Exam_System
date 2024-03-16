@@ -18,5 +18,7 @@ namespace BLL.IRepository
         List<Question> GetQuestionsByExamId(int ExamId);
         List<Choice> GetChoicesByQuestionId(int QuestId);
         Status SubmitStudentExam(StudentExamViewModel studentExamViewModel);
+        Tuple<int, int> CalculateTotalGrade(StudentExamViewModel studentExamViewModel);
+
     }
 }
