@@ -35,7 +35,7 @@ namespace ExamSystemPL.Controllers
             var stdId = 2;
             //ViewBag.ExamData = examRepository.GetCurrentExamByStudentId(stdId);
             var questions = examRepository.GetQuestionsByExamId(id);
-
+            
 
             StudentExamViewModel studentExamVM = new StudentExamViewModel();
             var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
@@ -68,6 +68,8 @@ namespace ExamSystemPL.Controllers
             }
             // Return To Index
             return RedirectToAction(nameof(Index));
+            
+
         }
 
         public IActionResult ShowExamGrade(Tuple<int, int> totalgrade)

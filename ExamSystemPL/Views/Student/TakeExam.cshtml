@@ -20,6 +20,9 @@
             <p class="card-text">
                 <b>Course Name: @courseName</b>
             </p>
+            <p class="card-text">
+                <b>Exam Timer:</b> <span class="timer"></span>
+                </p>
         </div>
 
         <div class="card p-5">
@@ -52,3 +55,31 @@
         </div>
     </div>
 </div>
+
+<script>
+    // exam timer
+    let duration = '@duration.Value.ToString("H:mm")';
+    let time = duration.split(':');
+    let hours = parseInt(time[0]);
+    let minutes = parseInt(time[1]);
+    let seconds = 0;
+    let timer = setInterval(() => {
+        if (hours == 0 && minutes == 0 && seconds == 0) {
+            clearInterval(timer);
+            document.querySelector('form').submit();
+        }
+        if (seconds == 0) {
+            if (minutes == 0) {
+                hours--;
+                minutes = 59;
+            } else {
+                minutes--;
+            }
+            seconds = 59;
+        } else {
+            seconds--;
+        }
+        document.querySelector('.timer').innerText = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+
+</script>
