@@ -1,4 +1,5 @@
-﻿using DAL.Data;
+﻿using BLL.ViewModels;
+using DAL.Data;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,5 +17,6 @@ namespace BLL.IRepository
         Exam GetCurrentExamByStudentId(int StudentId);
         List<Question> GetQuestionsByExamId(int ExamId);
         List<Choice> GetChoicesByQuestionId(int QuestId);
+        Status SubmitStudentExam(StudentExamViewModel studentExamViewModel);
     }
 }

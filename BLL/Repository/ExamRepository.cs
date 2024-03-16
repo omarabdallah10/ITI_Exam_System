@@ -1,4 +1,5 @@
 ﻿using BLL.IRepository;
+using BLL.ViewModels;
 using DAL.Data;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,24 @@ namespace BLL.Repository
             var Question = context.Questions.Include(q=>q.Ches).FirstOrDefault(s=>s.QId== QuestId);
             var QuestChoices = Question.Ches.ToList();
             return QuestChoices;
+        }
+        public Status SubmitStudentExam(StudentExamViewModel studentExamViewModel)
+        {
+            if (studentExamViewModel.QuestionsAnswers.Count>0)
+            {
+                foreach (var qAnswer in studentExamViewModel.QuestionsAnswers)
+                {
+                    var stdExam = new StdExam();
+                    stdExam.StdId = studentExamViewModel.StdId;
+                    stdExam.ExId = studentExamViewModel.ExamId;
+                    stdExam.QId = qAnswer.Key;
+                    stdExam.StdAnswer = qAnswer.Value;
+                    context.StdExams.Add(stdExam);
+                }
+                context.SaveChanges();
+                return Status.Success;
+            }
+            return Status.Failed;
         }
 
     }

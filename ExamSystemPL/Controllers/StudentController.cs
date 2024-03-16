@@ -1,4 +1,5 @@
 ﻿using BLL.IRepository;
+using BLL.ViewModels;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,11 +33,41 @@ namespace ExamSystemPL.Controllers
         public IActionResult TakeExam(int id)
         {
             var stdId = 2;
-            ViewBag.ExamData = examRepository.GetCurrentExamByStudentId(stdId);
+            //ViewBag.ExamData = examRepository.GetCurrentExamByStudentId(stdId);
             var questions = examRepository.GetQuestionsByExamId(id);
-            return View(questions);
+
+
+            StudentExamViewModel studentExamVM = new StudentExamViewModel();
+            var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
+            studentExamVM.Exam = currentExam;
+            studentExamVM.StdId = stdId;
+            studentExamVM.ExamId = currentExam.ExId;
+            studentExamVM.Questions = questions;
+
+            studentExamVM.QuestionsAnswers = new Dictionary<int, int?>();
+
+            foreach (var question in questions)
+            {
+                studentExamVM.QuestionsAnswers.Add(question.QId, null);
+            }
+
+            return View(studentExamVM);
         }
 
+        [HttpPost]
+        public IActionResult SubmitExam(StudentExamViewModel studentExamViewModel)
+        {
+            var status = examRepository.SubmitStudentExam(studentExamViewModel);
+            if (status == BLL.Status.Success)
+            {
+                // View Grade After Correction
+                
+
+                return RedirectToAction(nameof(Index));
+            }
+            // Return To Index
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }
