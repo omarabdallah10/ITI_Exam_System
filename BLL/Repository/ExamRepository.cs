@@ -111,6 +111,26 @@ namespace BLL.Repository
             exam.TotalScore = TotalScore;
             context.SaveChanges();
         }
+        public bool IsStudentExamSubmitted(int StudentId, int ExamId)
+        {
+            var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == StudentId && e.ExId == ExamId);
+            if (stdExam != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool IsExamTimeUp(int ExamId)
+        {
+            var exam = GetExamById(ExamId);
+            if (exam.Date < DateOnly.FromDateTime(DateTime.Today))
+            {
+                return true;
+            }
+            return false;
+        }
+
+       
 
     }
 }

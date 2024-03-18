@@ -19,6 +19,7 @@ namespace BLL.IRepository
         List<Choice> GetChoicesByQuestionId(int QuestId);
         Status SubmitStudentExam(StudentExamViewModel studentExamViewModel);
         Tuple<int, int> CalculateTotalGrade(StudentExamViewModel studentExamViewModel);
-
+        bool IsStudentExamSubmitted(int StudentId, int ExamId);
+        public bool IsExamTimeUp(int ExamId);
     }
 }

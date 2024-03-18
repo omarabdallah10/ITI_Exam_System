@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Access Denied";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .access-denied-container {
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .access-denied-icon {
+            font-size: 100px;
+            color: #dc3545;
+        }
+
+        .access-denied-heading {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-denied-container">
+        <i class="fas fa-ban access-denied-icon"></i>
+        <h2 class="access-denied-heading">Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <a asp-action="Login" class="btn btn-primary">Go To Login Page</a>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

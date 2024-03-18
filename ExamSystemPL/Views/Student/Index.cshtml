@@ -1,5 +1,9 @@
 ﻿@model Exam
 
+@{
+    Layout = "_StudentLayout";
+}
+
 <div class="container">
     <h4 class="display-4">Welcome, @ViewBag.currentStudent?.Username !</h4>
     @if (Model != null)

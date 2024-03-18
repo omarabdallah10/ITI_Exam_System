@@ -1,6 +1,7 @@
 ﻿@model BLL.ViewModels.StudentExamViewModel
 
 @{
+    Layout = "_StudentLayout";
     int counter = 1;
     var duration = Model.Exam.Duration as System.TimeOnly?;
     var courseName = Model.Exam?.Crs.CrsName;
@@ -22,7 +23,7 @@
             </p>
             <p class="card-text">
                 <b>Exam Timer:</b> <span class="timer"></span>
-                </p>
+            </p>
         </div>
 
         <div class="card p-5">

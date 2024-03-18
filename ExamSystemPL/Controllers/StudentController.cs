@@ -1,41 +1,50 @@
 ﻿using BLL.IRepository;
 using BLL.ViewModels;
 using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace ExamSystemPL.Controllers
 {
+    [Authorize(Roles = "student")]
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepository;
         private readonly IExamRepository examRepository;
-        public StudentController(IStudentRepository _studentRepository, IExamRepository _examRepository)
+        private readonly ICourseRepository courseRepository;
+        public StudentController(IStudentRepository _studentRepository, IExamRepository _examRepository, ICourseRepository _courseRepository)
         {
             studentRepository = _studentRepository;
             examRepository = _examRepository;
+            courseRepository = _courseRepository;
         }
-
+       
         public IActionResult Index()
         {
             var stdId = 2;
             var student = studentRepository.GetStudentById(stdId);
-            ViewBag.currentStudent= student;
+            ViewBag.currentStudent = student;
             var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
+            if (currentExam != null)
+            {
+                bool isExamSubmittedBefore = examRepository.IsStudentExamSubmitted(stdId, currentExam.ExId);
 
-            //var Exams = examRepository.GetAllExamByStudentId(stdId);
-            
-            //var questionChoices =examRepository.GetChoicesByQuestionId(1);
+                if (isExamSubmittedBefore)
+                {
 
-            return View(currentExam);
+                    return View();
+                }
+                return View(currentExam);
+            }
+            return View();
+          
         }
 
         public IActionResult TakeExam(int id)
         {
             var stdId = 2;
-            //ViewBag.ExamData = examRepository.GetCurrentExamByStudentId(stdId);
             var questions = examRepository.GetQuestionsByExamId(id);
-            
 
             StudentExamViewModel studentExamVM = new StudentExamViewModel();
             var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
@@ -62,13 +71,12 @@ namespace ExamSystemPL.Controllers
             {
                 // View Grade After Correction
 
-                Tuple<int,int> totalgrades = examRepository.CalculateTotalGrade(studentExamViewModel);
+                Tuple<int, int> totalgrades = examRepository.CalculateTotalGrade(studentExamViewModel);
 
                 return View(nameof(ShowExamGrade), totalgrades);
             }
             // Return To Index
             return RedirectToAction(nameof(Index));
-            
 
         }
 

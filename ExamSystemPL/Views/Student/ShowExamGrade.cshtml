@@ -1,12 +1,17 @@
 ﻿@model Tuple<int,int>
 
 @{
-    var precentage = (@Model.Item1 / @Model.Item2) * 100;
+    Layout = "_StudentLayout";
+    var precentage = @Model.Item1 * 100 / @Model.Item2;
 }
 
-<h2> You have Succesfully Submitted you Exam</h2>
-<h1> Total grade: @Model.Item1.ToString()   out of  @Model.Item2.ToString() </h1>
-<h1> precentage: @precentage % </h1>
 
-<input type="button" asp-action="index" value="Go Back To Home"/>
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">You have Succesfully Submitted you Exam!</h4>
+    <h5>Your Total grade: @Model.Item1.ToString()   out of  @Model.Item2.ToString()</h5>
+    <h5>Your Total grade: @Model.Item1.ToString()   out of  @Model.Item2.ToString()</h5>
+    <h6>Precentage: @precentage%</h6>
+    <hr>
+    <input type="button" asp-action="index" value="Go Back To Home" class="btn btn-info" />
+</div>
 
