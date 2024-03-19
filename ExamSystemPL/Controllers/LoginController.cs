@@ -6,7 +6,7 @@ namespace ExamSystemPL.Controllers
 {
     public class LoginController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }

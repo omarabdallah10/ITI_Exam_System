@@ -15,6 +15,7 @@ namespace BLL.IRepository
         Exam GetExamById(int ExamId);
         List<Exam> GetAllExamByStudentId(int StudentId);
         Exam GetCurrentExamByStudentId(int StudentId);
+        int GenerateExamByCrsId(int CrsId, DateTime date, TimeSpan duration);
         List<Question> GetQuestionsByExamId(int ExamId);
         List<Choice> GetChoicesByQuestionId(int QuestId);
         Status SubmitStudentExam(StudentExamViewModel studentExamViewModel);
