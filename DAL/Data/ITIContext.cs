@@ -41,10 +41,8 @@ public partial class ITIContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-    }
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=examination-server.database.windows.net;Database=Examination_System_DB;User Id=examAdmin;Password=examinationTeam5;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -145,7 +143,7 @@ public partial class ITIContext : DbContext
 
             entity.HasMany(d => d.QIds).WithMany(p => p.Exes)
                 .UsingEntity<Dictionary<string, object>>(
-                    "ExQuestion",
+                    "ExamQuestion",
                     r => r.HasOne<Question>().WithMany()
                         .HasForeignKey("QId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
@@ -156,8 +154,8 @@ public partial class ITIContext : DbContext
                         .HasConstraintName("FK_ex_question_exam"),
                     j =>
                     {
-                        j.HasKey("ExId", "QId");
-                        j.ToTable("ex_question");
+                        j.HasKey("ExId", "QId").HasName("PK_ex_question");
+                        j.ToTable("exam_question");
                         j.IndexerProperty<int>("ExId").HasColumnName("ex_id");
                         j.IndexerProperty<int>("QId").HasColumnName("q_id");
                     });

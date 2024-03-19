@@ -1,0 +1,86 @@
+﻿@model BLL.ViewModels.StudentExamViewModel
+
+@{
+    Layout = "_StudentLayout";
+    int counter = 1;
+    var duration = Model.Exam.Duration as System.TimeOnly?;
+    var courseName = Model.Exam?.Crs.CrsName;
+}
+
+
+
+<div class="container mt-5">
+    <div class="card mt-5 mb-2">
+        <div class="card-header bg-info text-dark text-center">
+            <h3>ITI Exam</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours
+            </p>
+            <p class="card-text">
+                <b>Course Name: @courseName</b>
+            </p>
+            <p class="card-text">
+                <b>Exam Timer:</b> <span class="timer"></span>
+            </p>
+        </div>
+
+        <div class="card p-5">
+            <form asp-action="SubmitExam" asp-controller="Student" method="post">
+                @for (int i = 0; i < Model.Questions.Count; i++)
+                {
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Question @(counter++)
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Questions[i].QText</h5>
+                            <div class="form-group">
+                                @foreach (var choice in Model.Questions[i].Ches)
+                                {
+                                    <div class="form-check">
+                                        <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" />
+                                        <label class="form-check-label">@choice.Text</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <input asp-for="ExamId" hidden />
+                <input asp-for="StdId" hidden />
+                <button type="submit" class="btn btn-dark">Submit Exam</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // exam timer
+    let duration = '@duration.Value.ToString("H:mm")';
+    let time = duration.split(':');
+    let hours = parseInt(time[0]);
+    let minutes = parseInt(time[1]);
+    let seconds = 0;
+    let timer = setInterval(() => {
+        if (hours == 0 && minutes == 0 && seconds == 0) {
+            clearInterval(timer);
+            document.querySelector('form').submit();
+        }
+        if (seconds == 0) {
+            if (minutes == 0) {
+                hours--;
+                minutes = 59;
+            } else {
+                minutes--;
+            }
+            seconds = 59;
+        } else {
+            seconds--;
+        }
+        document.querySelector('.timer').innerText = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+
+</script>

@@ -1,16 +1,30 @@
-﻿
-@model List<Student>
+﻿@model Exam
 
 @{
+    Layout = "_StudentLayout";
 }
 
+<div class="container">
+    <h4 class="display-4">Welcome, @ViewBag.currentStudent?.Username !</h4>
+    @if (Model != null)
+    {
+        <p class="lead">Thank you for visiting. You have an exam scheduled.</p>
+        <hr class="my-4">
+        <p>Below are the details of your exam:</p>
 
-<table>
-    @foreach (var item in Model)
-        {
-        <tr>
-            <td>@item.DeptId</td>
-        </tr>
+        <div class="card mt-5 text-center">
+            <div class="card-header bg-primary text-white">
+                <b>Exam Duration:</b> @Model?.Duration.Value.ToString("H:mm") Hours
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">You have an Exam on Course: @Model?.Crs?.CrsName</h5>
+                <p class="card-text">Start Now!</p>
+                <a asp-action="TakeExam" asp-route-id="@Model.ExId" class="btn btn-success">Take Exam</a>
+            </div>
+        </div>
     }
- 
-</table>
+    else
+    {
+        <h3 class="text text-success mt-5 text-center">You have no exam scheduled!</h3>
+    }
+</div>
