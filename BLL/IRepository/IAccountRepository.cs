@@ -3,6 +3,7 @@ using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace BLL.IRepository
     {
 
         User GetUserAuth(UserLoginModelView userLogin);
-        void AddUserAuthentication(User userLogin);
+        ClaimsPrincipal AddUserAuthentication(User userLogin);
         void AddUser(UserRegisterModelView userRegister);
         List<Department> GetDepartments();
     }

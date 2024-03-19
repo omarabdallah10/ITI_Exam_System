@@ -25,9 +25,9 @@ namespace BLL.Repository
         {
             return context.Courses.Include(c=>c.Exams).FirstOrDefault(c => c.CrsId == CourseId);
         }
-        public List<Course> GetCoursesByStudentId(int StudentId)
+        public List<StudentCourse> GetCoursesByStudentId(int StudentId)
         {
-            return context.StudentCourses.Where(sc => sc.SId == StudentId).Select(sc => sc.Crs).ToList();
+            return context.StudentCourses.Include(sc => sc.Crs).Where(sc => sc.SId == StudentId).ToList();
         }
         public List<Exam> GetExamsByCourseId(int CourseId)
         {

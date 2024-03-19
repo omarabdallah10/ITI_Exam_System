@@ -29,20 +29,26 @@ namespace BLL.Repository
             return std;
         }
 
-        public Status CreateStudent(Student student)
+        public int GetStudentByIdByName(string? userName)
         {
-            throw new NotImplementedException();
+            var std = context.Users.Include(s => s.Student).FirstOrDefault(s => s.Username == userName);
+            return std.UId;
         }
 
-        public Status UpdateStudent(int id, Student student)
-        {
-            throw new NotImplementedException();
-        }
+        //public Status CreateStudent(Student student)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Status DeleteStudentById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public Status UpdateStudent(int id, Student student)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Status DeleteStudentById(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
     }
 }

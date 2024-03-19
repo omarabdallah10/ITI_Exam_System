@@ -2,10 +2,13 @@
 using BLL.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ExamSystemPL.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly IAccountRepository accountRepository;
@@ -19,10 +22,10 @@ namespace ExamSystemPL.Controllers
           
             return View();
         }
-
-        [HttpPost]
         #region Login
-        public IActionResult Login(UserLoginModelView userLogin, string returnUrl)
+        [HttpPost]
+   
+        public async Task<IActionResult> Login(UserLoginModelView userLogin)
         {
             if (userLogin != null)
             {
@@ -32,7 +35,9 @@ namespace ExamSystemPL.Controllers
                     if (user != null)
                     {
 
-                        accountRepository.AddUserAuthentication(user);
+                        var claimPrincipal= accountRepository.AddUserAuthentication(user);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimPrincipal);
+
                         if (user.Role == "admin")
                         {
                             return RedirectToAction("Index", "Admin");
@@ -63,11 +68,9 @@ namespace ExamSystemPL.Controllers
         } 
         #endregion
 
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
+       
         [HttpGet]
+        #region Register
         public IActionResult Register()
         {
             ViewBag.Depts = accountRepository.GetDepartments();
@@ -99,11 +102,15 @@ namespace ExamSystemPL.Controllers
             }
             return View(userRegister);
         }
-
+        #endregion
         public async Task<IActionResult>Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

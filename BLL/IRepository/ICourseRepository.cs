@@ -11,7 +11,7 @@ namespace BLL.IRepository
     {
         public List<Course> GetAllCourses();
         public Course GetCourseById(int CourseId);
-        public List<Course> GetCoursesByStudentId(int StudentId);
+        public List<StudentCourse> GetCoursesByStudentId(int StudentId);
         public List<Exam> GetExamsByCourseId(int CourseId);
 
     }

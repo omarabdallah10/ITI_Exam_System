@@ -22,7 +22,7 @@ namespace ExamSystemPL.Controllers
        
         public IActionResult Index()
         {
-            var stdId = 2;
+            var stdId = GetStudentBy();
             var student = studentRepository.GetStudentById(stdId);
             ViewBag.currentStudent = student;
             var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
@@ -43,7 +43,7 @@ namespace ExamSystemPL.Controllers
 
         public IActionResult TakeExam(int id)
         {
-            var stdId = 2;
+            var stdId = GetStudentBy();
             var questions = examRepository.GetQuestionsByExamId(id);
 
             StudentExamViewModel studentExamVM = new StudentExamViewModel();
@@ -79,10 +79,22 @@ namespace ExamSystemPL.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        public IActionResult GetCourses()
+        {
+            var stdId = GetStudentBy();
+            var stdcourses = courseRepository.GetCoursesByStudentId(stdId);
+            return View(stdcourses);
+        }
 
         public IActionResult ShowExamGrade(Tuple<int, int> totalgrade)
         {
             return View(totalgrade);
+        }
+        private int GetStudentBy()
+        {
+            var userName = HttpContext.User.Identity.Name;
+            var stdId = studentRepository.GetStudentByIdByName(userName);
+            return stdId;
         }
 
     }

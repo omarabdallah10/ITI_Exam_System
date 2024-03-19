@@ -2,6 +2,7 @@
 using BLL.ViewModels;
 using DAL.Data;
 using DAL.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace BLL.Repository
 {
@@ -22,10 +24,10 @@ namespace BLL.Repository
         }
 
      
-        public void AddUserAuthentication(User userLogin)
+        public ClaimsPrincipal AddUserAuthentication(User userLogin)
         {
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();    
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity();
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             Claim userName = new Claim(ClaimTypes.Name, userLogin.Username);
 
             //Claim surName = new Claim(ClaimTypes.Surname, userLogin.Fname+" "+userLogin.Lname);
@@ -34,6 +36,7 @@ namespace BLL.Repository
             //claimsIdentity.AddClaim(surName);
             claimsIdentity.AddClaim(role);
             claimsPrincipal.AddIdentity(claimsIdentity);
+            return claimsPrincipal;
         }
 
         public User GetUserAuth(UserLoginModelView userLogin)
