@@ -63,6 +63,28 @@ namespace ExamSystemPL.Controllers
             return View(studentExamVM);
         }
 
+        public IActionResult SeeStudentExam(int crsId)
+        {
+            var stdId = GetStudentBy();
+            var exam = examRepository.GetExamByCourseId(crsId);
+            var questions = examRepository.GetQuestionsByExamId(exam.ExId);
+
+            StudentExamViewModel studentExamVM = new StudentExamViewModel();
+            var currentExam = examRepository.GetCurrentExamByStudentId(stdId);
+            studentExamVM.Exam = exam;
+            studentExamVM.StdId = stdId;
+            studentExamVM.ExamId = exam.ExId;
+            studentExamVM.Questions = questions;
+
+            studentExamVM.QuestionsAnswers = new Dictionary<int, int?>();
+            foreach (var question in questions)
+            {
+                var studentAnswer = examRepository.GetStudentAnswer(stdId, question.QId, exam.ExId);
+                studentExamVM.QuestionsAnswers.Add(question.QId, studentAnswer);
+            }
+            return View(studentExamVM);
+        }
+
         [HttpPost]
         public IActionResult SubmitExam(StudentExamViewModel studentExamViewModel)
         {

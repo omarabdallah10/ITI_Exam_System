@@ -130,7 +130,20 @@ namespace BLL.Repository
             return false;
         }
 
-       
+       public Exam GetExamByCourseId(int CourseId)
+        {
+            var exam = context.Exams.FirstOrDefault(e => e.CrsId == CourseId);
+            return exam;
+        }
 
+        public int? GetStudentAnswer(int stdId, int qId, int exId)
+        {
+           var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == stdId && e.ExId == exId && e.QId == qId);
+            if (stdExam != null)
+            {
+                return stdExam.StdAnswer;
+            }
+            return null;
+        }
     }
 }
