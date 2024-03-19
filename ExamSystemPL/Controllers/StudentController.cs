@@ -38,7 +38,6 @@ namespace ExamSystemPL.Controllers
                 return View(currentExam);
             }
             return View();
-          
         }
 
         public IActionResult TakeExam(int id)
@@ -99,8 +98,8 @@ namespace ExamSystemPL.Controllers
             }
             // Return To Index
             return RedirectToAction(nameof(Index));
-
         }
+
         public IActionResult GetCourses()
         {
             var stdId = GetStudentBy();

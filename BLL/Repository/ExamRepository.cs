@@ -24,7 +24,7 @@ namespace BLL.Repository
             var exam = context.Exams.Include(e=>e.QIds).Include(e => e.Crs).FirstOrDefault(e => e.ExId == ExamId);
             return exam;
         }
-
+        
         public Exam GetCurrentExamByStudentId(int StudentId)
         {
             var currentExam = GetAllExamByStudentId(StudentId).FirstOrDefault(e => e.Date == DateOnly.FromDateTime(DateTime.Today));
@@ -84,7 +84,6 @@ namespace BLL.Repository
         }
         public Tuple<int,int> CalculateTotalGrade(StudentExamViewModel studentExamViewModel)
         {
-         
             if (studentExamViewModel.QuestionsAnswers.Count > 0)
             {
                 int totalGrade = 0;
