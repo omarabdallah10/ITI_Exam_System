@@ -3,6 +3,7 @@ using BLL.ViewModels;
 using DAL.Data;
 using DAL.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,15 @@ namespace BLL.Repository
 
             context.SaveChanges();
 
+        }
+
+        public User? GetUserByName(string userName)
+        {
+            User u = context.Users.Include(u => u.Instructor).FirstOrDefault(u => u.Username == userName);
+
+            if (u == null)
+                return null;
+            return u;
         }
 
         public List<Department> GetDepartments()

@@ -37,6 +37,8 @@ namespace BLL.Repository
 
         public List<Student> GetStudentsByDeptId(int deptId)
         {
+            if (deptId == null)
+                return null;
             var students = context.Students.Include(s => s.Std).Where(s => s.DeptId == deptId).ToList();
             return students;
         }

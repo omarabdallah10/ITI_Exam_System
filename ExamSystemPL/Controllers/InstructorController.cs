@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamSystemPL.Controllers
 {
-    //[Authorize(Roles = "instructor")]
+    [Authorize(Roles = "instructor")]
     public class InstructorController : Controller
     {
         private readonly IExamRepository examRepository;
@@ -64,11 +64,20 @@ namespace ExamSystemPL.Controllers
         }
 
 
-        public IActionResult AssignExamToStudent(int examId, int deptId)
+        public IActionResult AssignExamToStudent(int examId)
         {
             var exam = examRepository.GetExamById(examId);
-            var teacher = User;
+            var teacherName = User.Identity.Name;
+
+            var user = accountRepository.GetUserByName(teacherName);
+
+            int deptId = user.Instructor.DeptId.Value;
+
             var students = studentRepository.GetStudentsByDeptId(deptId);
+
+            if (students == null)
+                return View();
+
             ViewBag.students = students;
             return View(exam);
         }
