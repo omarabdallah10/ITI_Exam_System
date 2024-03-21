@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BLL.Repository
 {
@@ -75,7 +76,7 @@ namespace BLL.Repository
         {
             var exam = GetExamById(ExamId);
             var examQuestions = exam.QIds.ToList();
-            for (int i=0; i<examQuestions.Count;i++)
+            for (int i=0; i<examQuestions.Count; i++)
             {
                 examQuestions[i] = context.Questions.Include(q => q.Ches).FirstOrDefault(s => s.QId == examQuestions[i].QId);
             }
@@ -167,6 +168,25 @@ namespace BLL.Repository
                 return stdExam.StdAnswer;
             }
             return null;
+        }
+
+        public void AssignExamToStudents(int examId, List<int> studentsIds)
+        {
+            try
+            {
+                foreach (var stdId in studentsIds)
+                {
+                    var examIdParam = new SqlParameter("@examId", examId);
+                    var stdIdParam = new SqlParameter("@stdId", stdId);
+                    context.Database.ExecuteSqlRaw("AssignExamToStudent @examId, @stdId",
+                        examIdParam, stdIdParam);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

@@ -24,5 +24,6 @@ namespace BLL.IRepository
         public bool IsExamTimeUp(int ExamId);
         Exam GetExamByCourseId(int CourseId);
         int? GetStudentAnswer(int stdId, int qId, int exId);
+        public void AssignExamToStudents(int examId, List<int> studentsIds);
     }
 }

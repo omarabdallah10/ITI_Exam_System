@@ -20,7 +20,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours <b>Exam Id: </b> @Model.ExId
+                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours
             </p>
             @*             <p class="card-text">
             <b>Course Name: @Model.</b>
@@ -44,16 +44,16 @@
                                 {
                                     <div class="form-check">
                                         @{
-                                            
-                                            @if (choice.ChId == questions[i].Answer)
-                                            {
-                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled checked />
 
-                                            }
-                                            else
-                                            {
-                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled />
-                                            }
+                                            // @if (choice.ChId == Model.QuestionsAnswers[Model.Questions[i].QId].Value)
+                                            // {
+                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled checked />
+
+                                            // }
+                                            // else
+                                            // {
+                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled />
+                                            // }
 
                                             // Check if the choice ID matches the student's answer ID for the current question
 
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 }
-
+                
             </form>
 
 
