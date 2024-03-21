@@ -16,5 +16,7 @@ namespace BLL.IRepository
         //public Status CreateStudent(Student student);
         //public Status UpdateStudent(int id, Student student);
         int GetStudentByIdByName(string? userName);
+
+        public List<Student> GetStudentsByDeptId(int deptId);
     }
 }

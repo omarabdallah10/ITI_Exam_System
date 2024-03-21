@@ -40,21 +40,28 @@
                                 {
                                     <div class="form-check">
                                         @{
-
-                                            // @if (choice.ChId == Model.QuestionsAnswers[Model.Questions[i].QId].Value)
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled checked />
-
-                                            // }
-                                            // else
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled />
-                                            // }
-
+                                            var textClass = "";
+                                            @if (choice.ChId == Model.QuestionsAnswers[Model.Questions[i].QId].Value)
+                                            {
+                                                <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId"  checked />
+                                                if (choice.ChId == Model.Questions[i].Answer)
+                                                    textClass = "border border-3 border-success";
+                                                else
+                                                    textClass = "border border-3 border-danger";
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input " value="@choice.ChId"  />
+                                                if (choice.ChId == Model.Questions[i].Answer)
+                                                    textClass = "border border-3 border-success";
+                                            }
                                             // Check if the choice ID matches the student's answer ID for the current question
 
                                         }
-                                        <label class="form-check-label">@choice.Text</label>
+                                        <label class="form-check-label @textClass rounded">@choice.Text</label>
+                                        @{
+                                            textClass = "";
+                                        }
                                     </div>
                                 }
                             </div>
