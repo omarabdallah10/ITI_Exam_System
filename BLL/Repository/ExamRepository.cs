@@ -26,7 +26,7 @@ namespace BLL.Repository
             var exam = context.Exams.Include(e=>e.QIds).Include(e => e.Crs).FirstOrDefault(e => e.ExId == ExamId);
             return exam;
         }
-
+        
         public Exam GetCurrentExamByStudentId(int StudentId)
         {
             var currentExam = GetAllExamByStudentId(StudentId).FirstOrDefault(e => e.Date == DateOnly.FromDateTime(DateTime.Today));
@@ -108,7 +108,6 @@ namespace BLL.Repository
         }
         public Tuple<int,int> CalculateTotalGrade(StudentExamViewModel studentExamViewModel)
         {
-         
             if (studentExamViewModel.QuestionsAnswers.Count > 0)
             {
                 int totalGrade = 0;
@@ -135,6 +134,39 @@ namespace BLL.Repository
             exam.TotalScore = TotalScore;
             context.SaveChanges();
         }
+        public bool IsStudentExamSubmitted(int StudentId, int ExamId)
+        {
+            var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == StudentId && e.ExId == ExamId);
+            if (stdExam != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool IsExamTimeUp(int ExamId)
+        {
+            var exam = GetExamById(ExamId);
+            if (exam.Date < DateOnly.FromDateTime(DateTime.Today))
+            {
+                return true;
+            }
+            return false;
+        }
 
+       public Exam GetExamByCourseId(int CourseId)
+        {
+            var exam = context.Exams.FirstOrDefault(e => e.CrsId == CourseId);
+            return exam;
+        }
+
+        public int? GetStudentAnswer(int stdId, int qId, int exId)
+        {
+           var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == stdId && e.ExId == exId && e.QId == qId);
+            if (stdExam != null)
+            {
+                return stdExam.StdAnswer;
+            }
+            return null;
+        }
     }
 }

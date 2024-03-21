@@ -1,9 +1,11 @@
-﻿using BLL.IRepository;
+﻿using Microsoft.AspNetCore.Authorization;
+using BLL.IRepository;
 using BLL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamSystemPL.Controllers
 {
+    [Authorize(Roles = "instructor")]
     public class InstructorController : Controller
     {
         private readonly IExamRepository examRepository;
