@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using DAL.Data;
 using DAL.Models;
 using BLL.IRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExamSystemPL.Controllers
 {
+    /*[Authorize(Roles = "Admin")]*/
     public class CourseController : Controller
     {
         ICourseRepository courseRepository;
