@@ -11,25 +11,32 @@
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
 </head>
 <body>
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrsName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrsName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CrsId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="modal" id="courseDetailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Model.CrsName Course Details</h4>
+                    <a asp-action="index" asp-controller="course" class="btn-close"></a>
+                </div>
+                <div class="modal-body">
+                    <p>Course ID: @Model.CrsId</p>
+                    <p>Course Name: @Model.CrsName</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <a class="btn btn-danger" asp-action="index" asp-controller="course">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#courseDetailsModal").modal("show");
+        });
+    </script>
 </body>
 </html>
