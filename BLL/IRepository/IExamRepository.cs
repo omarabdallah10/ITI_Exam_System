@@ -15,6 +15,7 @@ namespace BLL.IRepository
         Exam GetExamById(int ExamId);
         List<Exam> GetAllExamByStudentId(int StudentId);
         Exam GetCurrentExamByStudentId(int StudentId);
+        int GenerateExamByCrsId(int CrsId, DateTime date, TimeSpan duration);
         List<Question> GetQuestionsByExamId(int ExamId);
         List<Choice> GetChoicesByQuestionId(int QuestId);
         Status SubmitStudentExam(StudentExamViewModel studentExamViewModel);
@@ -23,5 +24,6 @@ namespace BLL.IRepository
         public bool IsExamTimeUp(int ExamId);
         Exam GetExamByCourseId(int CourseId);
         int? GetStudentAnswer(int stdId, int qId, int exId);
+        public void AssignExamToStudents(int examId, List<int> studentsIds);
     }
 }

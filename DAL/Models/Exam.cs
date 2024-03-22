@@ -20,4 +20,9 @@ public partial class Exam
     public virtual ICollection<StdExam> StdExams { get; set; } = new List<StdExam>();
 
     public virtual ICollection<Question> QIds { get; set; } = new List<Question>();
+
+    public override string ToString()
+    {
+        return $"{Crs}, {Duration}, {Date}";
+    }
 }

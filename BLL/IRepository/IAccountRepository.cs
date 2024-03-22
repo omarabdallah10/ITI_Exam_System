@@ -15,6 +15,7 @@ namespace BLL.IRepository
         User GetUserAuth(UserLoginModelView userLogin);
         ClaimsPrincipal AddUserAuthentication(User userLogin);
         void AddUser(UserRegisterModelView userRegister);
+        User? GetUserByName(string userName);
         List<Department> GetDepartments();
     }
 }

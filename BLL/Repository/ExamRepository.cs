@@ -2,12 +2,15 @@
 using BLL.ViewModels;
 using DAL.Data;
 using DAL.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BLL.Repository
 {
@@ -31,7 +34,29 @@ namespace BLL.Repository
            
             return currentExam;
         }
+        public int GenerateExamByCrsId(int CrsId, DateTime date, TimeSpan d)
+        {
+            //var generatedExam = context.Exams.FromSqlRaw("EXEC generate_exam {0}, {1}, {2}", CrsId, date, d).AsEnumerable().FirstOrDefault();
+            //Console.WriteLine(generatedExam);
 
+            var crsIdParam = new SqlParameter("@crs_id", CrsId);
+            var dateParam = new SqlParameter("@exam_date", date);
+            var durationParam = new SqlParameter("@duration", d);
+            var newExamId = new SqlParameter("@new_exam_id", SqlDbType.Int);
+            newExamId.Direction = ParameterDirection.Output;
+
+            var result = context.Database.ExecuteSqlRaw(
+                "EXEC generate_exam @crs_id, @exam_date, @duration, @new_exam_id output",
+                crsIdParam, dateParam, durationParam, newExamId);
+
+            var ExamId = new SqlParameter("@exam_id", (int)newExamId.Value);
+            var resExam = context.Database.ExecuteSqlRaw(
+                "EXEC get_exam @exam_id", ExamId);
+            //Console.WriteLine(newExamId);
+            Console.WriteLine(resExam);
+            
+            return (int)newExamId.Value;
+        }
         public List<Exam> GetAllExamByStudentId(int StudentId)
         {
             var stdCourses = context.StudentCourses.Include(c=>c.Crs).Where(c => c.SId == StudentId).ToList();
@@ -51,7 +76,7 @@ namespace BLL.Repository
         {
             var exam = GetExamById(ExamId);
             var examQuestions = exam.QIds.ToList();
-            for (int i=0; i<examQuestions.Count;i++)
+            for (int i=0; i<examQuestions.Count; i++)
             {
                 examQuestions[i] = context.Questions.Include(q => q.Ches).FirstOrDefault(s => s.QId == examQuestions[i].QId);
             }
@@ -143,6 +168,25 @@ namespace BLL.Repository
                 return stdExam.StdAnswer;
             }
             return null;
+        }
+
+        public void AssignExamToStudents(int examId, List<int> studentsIds)
+        {
+            try
+            {
+                foreach (var stdId in studentsIds)
+                {
+                    var examIdParam = new SqlParameter("@examId", examId);
+                    var stdIdParam = new SqlParameter("@stdId", stdId);
+                    context.Database.ExecuteSqlRaw("AssignExamToStudent @examId, @stdId",
+                        examIdParam, stdIdParam);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

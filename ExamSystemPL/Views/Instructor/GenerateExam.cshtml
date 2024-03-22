@@ -1,10 +1,14 @@
-﻿@model BLL.ViewModels.StudentExamViewModel
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Exam
 
 @{
-    Layout = "_StudentLayout";
+    //Layout = "_StudentLayout";
     int counter = 1;
-    var duration = Model.Exam.Duration as System.TimeOnly?;
-    var courseName = Model.Exam?.Crs.CrsName;
+    var duration = Model.Duration as System.TimeOnly?;
+    var courseName = Model.Crs.CrsName;
+    List<Question> questions = Model.QIds.ToList();
 }
 
 
@@ -16,7 +20,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours
+                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours <b>Exam Id: </b> @Model.ExId
             </p>
             @*             <p class="card-text">
             <b>Course Name: @Model.</b>
@@ -27,29 +31,29 @@
         <div class="card p-5">
             <!-- Inside the form -->
             <form asp-action="SubmitExam" asp-controller="Student" method="post">
-                @for (int i = 0; i < Model.Questions.Count; i++)
+                @for (int i = 0; i < questions.Count; i++)
                 {
                     <div class="card mb-4">
                         <div class="card-header bg-primary text-white">
                             Question @(counter++)
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">@Model.Questions[i].QText</h5>
+                            <h5 class="card-title">@questions[i].QText</h5>
                             <div class="form-group">
-                                @foreach (var choice in Model.Questions[i].Ches)
+                                @foreach (var choice in questions[i].Ches)
                                 {
                                     <div class="form-check">
                                         @{
+                                            
+                                            @if (choice.ChId == questions[i].Answer)
+                                            {
+                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled checked />
 
-                                            // @if (choice.ChId == Model.QuestionsAnswers[Model.Questions[i].QId].Value)
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled checked />
-
-                                            // }
-                                            // else
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled />
-                                            // }
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled />
+                                            }
 
                                             // Check if the choice ID matches the student's answer ID for the current question
 
@@ -61,11 +65,11 @@
                         </div>
                     </div>
                 }
-                <input asp-for="ExamId" hidden />
-                <input asp-for="StdId" hidden />
+
             </form>
 
 
         </div>
     </div>
 </div>
+
