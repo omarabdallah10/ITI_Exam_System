@@ -2,6 +2,7 @@
 
 @{
     Layout = null;
+    var departments = ViewBag.Depts as List<DAL.Models.Department>;
 }
 
 <!DOCTYPE html>
@@ -10,12 +11,99 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
-<body>
+<body class="text-center">
 
-<h4>User</h4>
-<hr />
-<div class="row">
+
+    <h1 class="text-dark text-decoration-underline mt-2">Create User</h1>
+
+    <form method="post" >
+        <table class="table table-hover table-bordered w-50 mx-auto">
+            <tbody>
+                <tr>
+                    <td>
+                        <label asp-for="Fname">First Name</label>
+                    </td>
+                    <td>
+                        <input asp-for="Fname"  class="form-control" />
+                        <span asp-validation-for="Fname"></span>
+                    </td>
+                </tr>
+                <tr>
+					<td>
+						<label asp-for="Lname">Last Name</label>
+					</td>
+					<td>
+						<input asp-for="Lname" class="form-control" />
+                        <span asp-validation-for="Lname"></span>
+					</td>
+                </tr>
+                <tr>
+					<td>
+						<label asp-for="Username">Username</label>
+					</td>
+					<td>
+						<input asp-for="Username" class="form-control" />
+						<span asp-validation-for="Username"></span>
+					</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Password">Password</label>
+                    </td>
+                    <td>
+                        <input asp-for="Password" class="form-control" />        
+                        <span asp-validation-for="Password"></span>
+                    </td>
+                </tr>
+                <tr>
+					<td>
+						<label asp-for="Role">Role</label>
+					</td>
+					<td>
+						<select asp-for="Role" class="form-select">
+							<option value="admin" selected>Admin</option>
+							<option value="instructor">Instructor</option>
+							<option value="student">Student</option>
+						</select>
+						<span asp-validation-for="Role"></span>
+					</td>
+                </tr>
+                @*hidden field for hire date if the role is instructor*@
+                <tr id="hireDateField" class="d-none">
+                    <td>
+                        <label for="">Hire Date</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" />
+                    </td>
+                </tr>
+                @*another hidden field for the dept id*@
+                <tr id="departmentField" class="d-none" >
+					<td>
+						<label for="">Department</label>
+					</td>
+					<td>
+						<select class="form-select">
+							@foreach (var item in departments)
+							{
+								<option value="@item.DeptId">@item.Name</option>
+							}
+						</select>
+					</td>
+                </tr>
+                <tr>
+					<td colspan="2">
+						<input type="submit" value="Add user" class="btn btn-primary w-50 mx-auto" />
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+
+@* <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -50,10 +138,38 @@
         </form>
     </div>
 </div>
-
+ *@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
+    @*check if the Role is Instructor in select menu to display the field 'HireDate'*@
+    <script>
+		let hireDateeField = document.getElementById('hireDateField');
+        let departmentField = document.getElementById('departmentField');
+        let roleSelected = document.querySelector('select');
+
+
+        roleSelected.addEventListener('change', function () {
+            console.log(roleSelected.value);
+            if (roleSelected.value == 'instructor') {
+				hireDateeField.classList.remove('d-none');
+				departmentField.classList.remove('d-none');
+			}
+			else if (roleSelected.value == 'student') {
+                departmentField.classList.remove('d-none');
+                hireDateeField.classList.add('d-none');
+            } else {
+				departmentField.classList.add('d-none');
+                hireDateeField.classList.add('d-none');
+			}
+
+		});
+
+    </script>
+
 
 </body>
 </html>

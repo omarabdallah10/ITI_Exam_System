@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL.Data;
 using DAL.Models;
 using BLL.IRepository;
+using BLL.Repository;
 
 namespace ExamSystemPL.Controllers
 {
@@ -20,144 +21,123 @@ namespace ExamSystemPL.Controllers
 			userRepository = _userRepository;
 		}
 
-        // GET: User
-        /*public async Task<IActionResult> Index()
-        {
-            return View(await _context.Users.ToListAsync());
-        }*/
+
         public IActionResult Index()
         {
 			var model = userRepository.GetAllUsers();
 			return View(model);
-		}
-/*
-        // GET: User/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UId == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            /*var admins = userRepository.GetUserByRole("Admin");
+            var students = userRepository.GetUserByRole("Student");
+            var instructors = userRepository.GetUserByRole("Instructor");
 
-            return View(user);
+            ViewBag.Admins = admins;
+            ViewBag.Students = students;
+            ViewBag.Instructors = instructors;
+
+            return View();*/
         }
 
-        // GET: User/Create
         public IActionResult Create()
         {
+            /*send the instructor table and departments table and student table as view bags*/
+            var depts = userRepository.GetAllDeprtments();
+            ViewBag.Depts = depts;
             return View();
         }
 
-        // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UId,Username,Password,Role,Fname,Lname")] User user)
+        public IActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var userModel = userRepository.GetUserByUsername(user.Username);
+                if (userModel != null)
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                    return View(user);
+                }
+                userRepository.AddUser(user);
+                return RedirectToAction("Index");
             }
             return View(user);
         }
 
-        // GET: User/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var userModel = userRepository.GetUserById(id.Value);
+            if (userModel == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(userModel);
         }
 
-        // POST: User/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UId,Username,Password,Role,Fname,Lname")] User user)
+        public IActionResult Edit(User user)
         {
-            if (id != user.UId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var userModel = userRepository.GetUserByUsername(user.Username);
+                if (userModel != null)
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("Username", "Username already exists");
+                    return View(user);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                userRepository.UpdateUser(user);
+                return RedirectToAction("Index");
             }
             return View(user);
         }
 
-        // GET: User/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UId == id);
-            if (user == null)
+            var userModel = userRepository.GetUserById(id.Value);
+            if (userModel == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(userModel);
         }
 
-        // POST: User/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+
+        /*public IActionResult Delete(int? id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            if (id == null)
             {
-                _context.Users.Remove(user);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var userModel = userRepository.GetUserById(id.Value);
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(userModel);
         }
 
-        private bool UserExists(int id)
+        public IActionResult confirmDelete(int? id)
         {
-            return _context.Users.Any(e => e.UId == id);
+            var userModel = userRepository.GetUserById(id.Value);
+            userRepository.DeleteUser(userModel);
+            return RedirectToAction("Index");
         }*/
+       
+
+
     }
 }

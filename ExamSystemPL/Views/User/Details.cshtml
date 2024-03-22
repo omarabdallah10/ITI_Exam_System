@@ -10,48 +10,36 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Role)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fname)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fname)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lname)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lname)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.UId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="modal" id="userDetailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Model.Username User Details</h4>
+                    <a asp-action="index" asp-controller="user" class="btn-close"></a>
+                </div>
+                <div class="modal-body">
+                    <p>ID: @Model.UId</p>
+                    <p>Name: @Model.Fname @Model.Lname</p>
+                    <p>Username: @Model.Username</p>
+                    <p>Role: @Model.Role</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <a class="btn btn-danger" asp-action="index" asp-controller="course">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#userDetailsModal").modal("show");
+        });
+    </script>
+
 </body>
 </html>
