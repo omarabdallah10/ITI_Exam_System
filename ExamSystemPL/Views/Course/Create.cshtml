@@ -1,0 +1,55 @@
+﻿@model DAL.Models.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+</head>
+<body class="text-center">
+
+    <a asp-action="Index" class="btn btn-outline-danger float-start ms-2">Back to List</a>
+    <h4 class="mt-2">Add new Course</h4>
+    <hr />
+    
+        <div class="col-md-4 mx-auto">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <table class="table table-hover table-bordered">
+                    <tr>
+						<td>
+							<label asp-for="CrsName" class="control-label"></label>
+						</td>
+						<td>
+							<input asp-for="CrsName" class="form-control" />
+							<span asp-validation-for="CrsName" class="text-danger"></span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="submit" value="Add Course" class="btn btn-primary" />
+						</td>
+					</tr>
+                </table>
+                @* <div class="form-group my-2">
+                    <label asp-for="CrsName" class="control-label"></label>
+                    <input asp-for="CrsName" class="form-control" />
+                    <span asp-validation-for="CrsName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div> *@
+            </form>
+
+    </div>
+
+
+</body>
+</html>

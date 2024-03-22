@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Dashboard</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="text-center">
+    <h1>Welcome to Admin Dashboard</h1>
+	<div class="d-flex ms-2">
+
+		<a asp-action="Logout" asp-controller="Account" class="btn btn-danger ">Logout</a> <br />
+	</div>
+
+    <div class="d-flex">
+        <div class="p-2 flex-fill">
+			<a asp-action="Index" asp-controller="Exam" class="btn btn-primary w-25">Exams</a>@**@
+		</div>
+		<div class="p-2 flex-fill">
+			<a asp-action="Index" asp-controller="course" class="btn btn-primary w-25">Courses</a>
+		</div>
+		<div class="p-2 flex-fill">
+			<a asp-action="Index" asp-controller="User" class="btn btn-primary w-25">Users</a>@**@
+		</div>
+    </div>
+</body>
+</html>

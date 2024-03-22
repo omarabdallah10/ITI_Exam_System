@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DAL.Models.Course>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="text-center">
+
+   @*  <h1 class="my-2 text-decoration-underline text-dark" > Courses </h1>
+
+    <table class="table table-borderd table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @item.CrsName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CrsId" class="btn btn-warning">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.CrsId" class="btn btn-secondary">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CrsId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>
+        <a asp-action="Create" class="btn btn-outline-primary my-3">Create New</a>
+    </p> *@
+
+
+    <h1 class="text-dark text-decoration-underline mb-5">Courses</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>Course Name</th>
+
+                <th>Actions</th>
+            </tr>
+            @foreach (var course in Model)
+            {
+                <tr>
+
+                    <td>@course.CrsName</td>
+
+                    <td>
+                        <a asp-action="details" asp-controller="course" asp-route-id="@course.CrsId" class="btn btn-warning">Details</a> |
+                        <a asp-action="edit" asp-controller="course" asp-route-id="@course.CrsId" class="btn btn-info">Edit</a> |
+                        @* <a onclick="return confirm('Are you sure to delete department?')" asp-action="delete" asp-controller="course" asp-route-id="@course.CrsId" class="btn btn-danger">Delete</a> *@
+                        <a asp-action="Delete" asp-controller="course" asp-route-id="@course.CrsId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </thead>
+    </table>
+    <a href="/course/create" class="btn btn-outline-primary w-25 mx-auto">Add new Course</a>
+</body>
+</html>

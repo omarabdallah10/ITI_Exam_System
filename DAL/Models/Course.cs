@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models;
 
@@ -7,7 +8,9 @@ public partial class Course
 {
     public int CrsId { get; set; }
 
-    public string? CrsName { get; set; }
+    [Required(ErrorMessage = "Course Name is required")]
+    [StringLength(20, ErrorMessage = "Course name can't exceed then 20 characters")]
+    public string CrsName { get; set; }
 
     public virtual ICollection<Exam> Exams { get; set; } = new List<Exam>();
 
