@@ -1,75 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model Exam
-
+﻿
 @{
-    //Layout = "_StudentLayout";
-    int counter = 1;
-    var duration = Model.Duration as System.TimeOnly?;
-    var courseName = Model.Crs.CrsName;
-    List<Question> questions = Model.QIds.ToList();
+    ViewData["Title"] = "Generate Exam";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
 }
-
-
-
-<div class="container mt-5">
-    <div class="card mt-5 mb-2">
-        <div class="card-header bg-info text-dark text-center">
-            <h3>ITI Exam</h3>
+ 
+<div class="container">
+    <h1 class="text-center">Generate Exam</h1>
+    <form method="post" >
+        <div class="mb-3">
+            <label for="crsId" class="form-label">Course ID</label>
+            <input type="text" class="form-control" id="crsId" name="crsId">
         </div>
-        <div class="card-body">
-            <p class="card-text">
-                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours <b>Exam Id: </b> @Model.ExId
-            </p>
-            @*             <p class="card-text">
-            <b>Course Name: @Model.</b>
-            </p> *@
-
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date">
         </div>
-
-        <div class="card p-5">
-            <!-- Inside the form -->
-            <form asp-action="SubmitExam" asp-controller="Student" method="post">
-                @for (int i = 0; i < questions.Count; i++)
-                {
-                    <div class="card mb-4">
-                        <div class="card-header bg-primary text-white">
-                            Question @(counter++)
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@questions[i].QText</h5>
-                            <div class="form-group">
-                                @foreach (var choice in questions[i].Ches)
-                                {
-                                    <div class="form-check">
-                                        @{
-                                            
-                                            @if (choice.ChId == questions[i].Answer)
-                                            {
-                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled checked />
-
-                                            }
-                                            else
-                                            {
-                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled />
-                                            }
-
-                                            // Check if the choice ID matches the student's answer ID for the current question
-
-                                        }
-                                        <label class="form-check-label">@choice.Text</label>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </form>
-
-
+        <div class="mb-3">
+            <label for="hours" class="form-label">Hours</label>
+            <input type="number" class="form-control" id="hours" name="hours" min="0" max="6">
         </div>
-    </div>
+        <div class="mb-3">
+            <label for="minutes" class="form-label">Minutes</label>
+            <input type="number" class="form-control" id="minutes" name="minutes" min="0" max="59">
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Exam</button>
+    </form>
 </div>
 
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+}

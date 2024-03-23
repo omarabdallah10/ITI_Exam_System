@@ -26,9 +26,11 @@ namespace ExamSystemPL.Controllers
         {
             return View();
         }
-        public IActionResult GenerateExam()
+
+        [HttpPost]
+        public IActionResult GenerateExam(int crsId, DateTime date, int hours, int minutes)
         {
-            var generatedExamId = examRepository.GenerateExamByCrsId(1, DateTime.Now,new TimeSpan(1, 40, 0));
+            var generatedExamId = examRepository.GenerateExamByCrsId(crsId, date, new TimeSpan(hours, minutes, 0));
 
             Console.WriteLine(generatedExamId);
 
@@ -37,10 +39,12 @@ namespace ExamSystemPL.Controllers
 
             generatedExam.QIds = questionsPopulated;
             Console.WriteLine(generatedExam.QIds);
-            StudentExamViewModel studentExamVM = new StudentExamViewModel();
 
-
-            return View(generatedExam);
+            return View("GeneratedExam" ,generatedExam);
+        }
+        public IActionResult GenerateExam()
+        {
+            return View();
         }
 
         public IActionResult ExamCorrection(int exId, int stdId)

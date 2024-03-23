@@ -4,7 +4,7 @@
 @model Exam
 
 @{
-    //Layout = "_StudentLayout";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
     int counter = 1;
     var duration = Model.Duration as System.TimeOnly?;
     var courseName = Model.Crs.CrsName;
@@ -20,7 +20,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours
+                <b>Exam Duration:</b> @duration.Value.ToString("H:mm") Hours <b>Exam Id: </b> @Model.ExId
             </p>
             @*             <p class="card-text">
             <b>Course Name: @Model.</b>
@@ -45,15 +45,15 @@
                                     <div class="form-check">
                                         @{
 
-                                            // @if (choice.ChId == Model.QuestionsAnswers[Model.Questions[i].QId].Value)
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled checked />
+                                            @if (choice.ChId == questions[i].Answer)
+                                            {
+                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled checked />
 
-                                            // }
-                                            // else
-                                            // {
-                                            //     <input type="radio" asp-for="@Model.QuestionsAnswers[Model.Questions[i].QId]" class="form-check-input" value="@choice.ChId" disabled />
-                                            // }
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" asp-for="@questions[i].Answer" class="form-check-input" value="@choice.ChId" disabled />
+                                            }
 
                                             // Check if the choice ID matches the student's answer ID for the current question
 
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 }
-                
+
             </form>
 
 
