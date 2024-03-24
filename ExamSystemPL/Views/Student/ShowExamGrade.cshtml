@@ -8,10 +8,11 @@
 
 <div class="alert alert-success" role="alert">
     <h4 class="alert-heading">You have Succesfully Submitted you Exam!</h4>
+    <br />
     <h5>Your Total grade: @Model.Item1.ToString()   out of  @Model.Item2.ToString()</h5>
-    <h5>Your Total grade: @Model.Item1.ToString()   out of  @Model.Item2.ToString()</h5>
+    <br />
     <h6>Precentage: @precentage%</h6>
     <hr>
-    <input type="button" asp-action="index" value="Go Back To Home" class="btn btn-info" />
+    <input type="button" asp-action="index" asp-controller="Student" value="Go Back To Home" class="btn btn-info" />
 </div>
 

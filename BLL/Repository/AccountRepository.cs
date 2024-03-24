@@ -60,7 +60,6 @@ namespace BLL.Repository
             });
 
             context.SaveChanges();
-
         }
 
         public User? GetUserByName(string userName)

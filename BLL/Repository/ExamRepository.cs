@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -111,6 +112,7 @@ namespace BLL.Repository
         {
             if (studentExamViewModel.QuestionsAnswers.Count > 0)
             {
+                studentExamViewModel.Exam = GetExamById(studentExamViewModel.ExamId);
                 int totalGrade = 0;
                 int overAllGrade = 0;
                 foreach (var qAnswer in studentExamViewModel.QuestionsAnswers)
@@ -124,6 +126,7 @@ namespace BLL.Repository
                     }
                 }
                 SaveExamTotalScore(studentExamViewModel.ExamId, totalGrade);
+                SaveStudentCourseGrade(studentExamViewModel, totalGrade);
                 //context.SaveChanges();
                 return new Tuple<int,int >(totalGrade,overAllGrade);
             }
@@ -135,6 +138,16 @@ namespace BLL.Repository
             exam.TotalScore = TotalScore;
             context.SaveChanges();
         }
+        private void SaveStudentCourseGrade(StudentExamViewModel studentExamViewModel,int totalGrade)
+        {
+            var stdCourse = context.StudentCourses.FirstOrDefault(c => c.SId == studentExamViewModel.StdId && c.CrsId == studentExamViewModel.Exam.CrsId);
+            if (stdCourse != null)
+            {
+                stdCourse.Grade = totalGrade;
+                context.SaveChanges();
+            }
+        }
+
         public bool IsStudentExamSubmitted(int StudentId, int ExamId)
         {
             var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == StudentId && e.ExId == ExamId);
@@ -144,6 +157,7 @@ namespace BLL.Repository
             }
             return false;
         }
+
         public bool IsExamTimeUp(int ExamId)
         {
             var exam = GetExamById(ExamId);
