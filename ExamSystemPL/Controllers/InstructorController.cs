@@ -14,17 +14,23 @@ namespace ExamSystemPL.Controllers
         private readonly IExamRepository examRepository;
         private readonly IAccountRepository accountRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly ICourseRepository courseRepository;
         private readonly ITIContext context;
-        public InstructorController(IExamRepository _examRepository, IAccountRepository _accountRepository, IStudentRepository _studentRepository, ITIContext _context)
+        public InstructorController(IExamRepository _examRepository, IAccountRepository _accountRepository, IStudentRepository _studentRepository, ITIContext _context, ICourseRepository _courseRepository)
         { 
             examRepository = _examRepository;
             accountRepository = _accountRepository;
             studentRepository = _studentRepository;
+            courseRepository = _courseRepository;
             context = _context;
         }
         public IActionResult Index()
         {
-            return View();
+            var teacherName = User.Identity.Name;
+            var user = accountRepository.GetUserByName(teacherName);
+
+            List<Course> courses = courseRepository.GetCoursesByInstructorId(user.UId);
+            return View(courses);
         }
 
         [HttpPost]

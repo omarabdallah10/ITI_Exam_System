@@ -30,7 +30,7 @@
 
         <div class="card p-5">
             <!-- Inside the form -->
-            <form asp-action="SubmitExam" asp-controller="Student" method="post">
+            <form>
                 @for (int i = 0; i < questions.Count; i++)
                 {
                     <div class="card mb-4">
@@ -68,6 +68,7 @@
 
             </form>
 
+            <a class="btn btn-primary" href="/Instructor/AssignExamToStudent?examId=@Model.ExId">Assign Exam to students</a>
 
         </div>
     </div>
