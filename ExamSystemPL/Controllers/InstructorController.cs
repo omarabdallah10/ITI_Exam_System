@@ -103,5 +103,28 @@ namespace ExamSystemPL.Controllers
             examRepository.AssignExamToStudents(examId, studentsIds);
             return Content("done");
         }
+
+        public IActionResult ManageExams()
+        {
+            var teacherName = User.Identity.Name;
+
+            var user = accountRepository.GetUserByName(teacherName);
+
+            int deptId = user.Instructor.DeptId.Value;
+
+            var students = studentRepository.GetStudentsByDeptId(deptId);
+
+            if (students == null)
+                return View();
+
+            return View(students);
+        }
+
+        public IActionResult getStdExams(int stdId)
+        {
+            var stdExams = examRepository.GetAllExamByStudentId(stdId);
+            ViewBag.StdExams = stdExams;
+            return View(stdId);
+        }
     }
 }

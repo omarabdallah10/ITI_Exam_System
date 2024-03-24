@@ -1,0 +1,12 @@
+﻿@model int
+@{
+    Layout = "_InstructorLayout";
+    var Exams = ViewBag.StdExams;
+}
+
+<div>
+    @foreach(var exam in Exams)
+    {
+        <a href="/Instructor/ExamCorrection?exId=@exam.ExId&stdId=@Model">@exam.ExId</a>
+    }
+</div>
