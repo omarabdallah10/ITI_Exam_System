@@ -1,0 +1,11 @@
+﻿@model List<Student>
+@{
+    Layout = "_InstructorLayout";
+}
+
+<div>
+    @foreach (var student in Model)
+    {
+        <a asp-action="getStdExams" asp-route-stdId="@student.Std.UId">@student.Std.Username</a>
+    }
+</div>

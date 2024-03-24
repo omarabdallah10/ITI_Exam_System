@@ -1,0 +1,14 @@
+﻿@model List<Course>
+@{
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+}
+
+
+<div class="container">
+    @foreach(var course in Model)
+    {
+        <div class="container" >
+            <a>@course.CrsName</a>
+        </div>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿@model BLL.ViewModels.StudentExamViewModel
 
 @{
-    Layout = "_StudentLayout";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
     int counter = 1;
     var duration = Model.Exam.Duration as System.TimeOnly?;
     var courseName = Model.Exam?.Crs.CrsName;

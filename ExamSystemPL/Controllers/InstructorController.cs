@@ -14,21 +14,29 @@ namespace ExamSystemPL.Controllers
         private readonly IExamRepository examRepository;
         private readonly IAccountRepository accountRepository;
         private readonly IStudentRepository studentRepository;
+        private readonly ICourseRepository courseRepository;
         private readonly ITIContext context;
-        public InstructorController(IExamRepository _examRepository, IAccountRepository _accountRepository, IStudentRepository _studentRepository, ITIContext _context)
+        public InstructorController(IExamRepository _examRepository, IAccountRepository _accountRepository, IStudentRepository _studentRepository, ITIContext _context, ICourseRepository _courseRepository)
         { 
             examRepository = _examRepository;
             accountRepository = _accountRepository;
             studentRepository = _studentRepository;
+            courseRepository = _courseRepository;
             context = _context;
         }
         public IActionResult Index()
         {
-            return View();
+            var teacherName = User.Identity.Name;
+            var user = accountRepository.GetUserByName(teacherName);
+
+            List<Course> courses = courseRepository.GetCoursesByInstructorId(user.UId);
+            return View(courses);
         }
-        public IActionResult GenerateExam()
+
+        [HttpPost]
+        public IActionResult GenerateExam(int crsId, DateTime date, int hours, int minutes)
         {
-            var generatedExamId = examRepository.GenerateExamByCrsId(1, DateTime.Now,new TimeSpan(1, 40, 0));
+            var generatedExamId = examRepository.GenerateExamByCrsId(crsId, date, new TimeSpan(hours, minutes, 0));
 
             Console.WriteLine(generatedExamId);
 
@@ -37,10 +45,12 @@ namespace ExamSystemPL.Controllers
 
             generatedExam.QIds = questionsPopulated;
             Console.WriteLine(generatedExam.QIds);
-            StudentExamViewModel studentExamVM = new StudentExamViewModel();
 
-
-            return View(generatedExam);
+            return View("GeneratedExam" ,generatedExam);
+        }
+        public IActionResult GenerateExam()
+        {
+            return View();
         }
 
         public IActionResult ExamCorrection(int exId, int stdId)
@@ -92,6 +102,29 @@ namespace ExamSystemPL.Controllers
             }
             examRepository.AssignExamToStudents(examId, studentsIds);
             return Content("done");
+        }
+
+        public IActionResult ManageExams()
+        {
+            var teacherName = User.Identity.Name;
+
+            var user = accountRepository.GetUserByName(teacherName);
+
+            int deptId = user.Instructor.DeptId.Value;
+
+            var students = studentRepository.GetStudentsByDeptId(deptId);
+
+            if (students == null)
+                return View();
+
+            return View(students);
+        }
+
+        public IActionResult getStdExams(int stdId)
+        {
+            var stdExams = examRepository.GetAllExamByStudentId(stdId);
+            ViewBag.StdExams = stdExams;
+            return View(stdId);
         }
     }
 }
