@@ -28,11 +28,12 @@ namespace BLL.Repository
             var exam = context.Exams.Include(e=>e.QIds).Include(e => e.Crs).FirstOrDefault(e => e.ExId == ExamId);
             return exam;
         }
-        
+
         public Exam GetCurrentExamByStudentId(int StudentId)
         {
-            var currentExam = GetAllExamByStudentId(StudentId).FirstOrDefault(e => e.Date == DateOnly.FromDateTime(DateTime.Today));
-           
+            var currentExam = GetAllExamByStudentId(StudentId)
+                                  .FirstOrDefault(e => e.Date == DateOnly.FromDateTime(DateTime.Today));
+
             return currentExam;
         }
         public int GenerateExamByCrsId(int CrsId, DateTime date, TimeSpan d)
@@ -60,12 +61,18 @@ namespace BLL.Repository
         }
         public List<Exam> GetAllExamByStudentId(int StudentId)
         {
-            var stdCourses = context.StudentCourses.Include(c=>c.Crs).Where(c => c.SId == StudentId).ToList();
+            var stdExamIds = context.StdExams
+                                    .Include(e => e.Ex)
+                                    .Where(s => s.StdId == StudentId)
+                                    .Select(e => e.ExId)
+                                    .Distinct()
+                                    .ToList(); // Materialize the results by converting to a list
+
             List<Exam> exams = new List<Exam>();
-            foreach (var course in stdCourses)
+            foreach (var item in stdExamIds)
             {
-                var exam = context.Exams.FirstOrDefault(e => e.CrsId == course.CrsId);
-                if (exam!=null)
+                var exam = context.Exams.FirstOrDefault(e => e.ExId == item);
+                if (exam != null)
                 {
                     exams.Add(exam);
                 }
@@ -150,7 +157,7 @@ namespace BLL.Repository
 
         public bool IsStudentExamSubmitted(int StudentId, int ExamId)
         {
-            var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == StudentId && e.ExId == ExamId);
+            var stdExam = context.StdExams.FirstOrDefault(e => e.StdId == StudentId && e.ExId == ExamId&&e.StdAnswer!=null);
             if (stdExam != null)
             {
                 return true;

@@ -22,6 +22,8 @@ namespace ExamSystemPL.Controllers
        
         public IActionResult Index()
         {
+
+
             var stdId = GetStudentBy();
             var student = studentRepository.GetStudentById(stdId);
             ViewBag.currentStudent = student;
@@ -87,15 +89,14 @@ namespace ExamSystemPL.Controllers
         [HttpPost]
         public IActionResult SubmitExam(StudentExamViewModel studentExamViewModel)
         {
-            var status = examRepository.SubmitStudentExam(studentExamViewModel);
-            if (status == BLL.Status.Success)
-            {
+            //var status = examRepository.SubmitStudentExam(studentExamViewModel);
+          
                 // View Grade After Correction
 
                 Tuple<int, int> totalgrades = examRepository.CalculateTotalGrade(studentExamViewModel);
 
                 return View(nameof(ShowExamGrade), totalgrades);
-            }
+            
             // Return To Index
             return RedirectToAction(nameof(Index));
         }
