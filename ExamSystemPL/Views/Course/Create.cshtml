@@ -1,0 +1,41 @@
+﻿@model DAL.Models.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="text-center">
+
+<h4>Course</h4>
+<hr />
+
+	<form method="post">
+		<h1 class="text-dark text-decoration-underline mb-5">Add new Course</h1>
+		<table class="table table-bordered table-hover text-center w-50 m-auto">
+			<tr>
+				<td><label asp-for="CrsName">Course Name</label></td>
+				<td>
+					<input asp-for="CrsName" class="form-control" />
+					<span asp-validation-for="CrsName" class="text-danger"></span>
+				</td>
+
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a asp-action="Index" class="btn btn-outline-primary w-25 mx-auto">Back To Courses</a>
+					<input type="submit" value="Add" class="btn btn-outline-primary w-50 mx-auto" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>

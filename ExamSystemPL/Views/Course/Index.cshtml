@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DAL.Models.Course>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="text-center">
+
+    <h1 class="text-dark text-decoration-underline mt-2">Courses</h1>
+    <table class="table">
+       <thead>
+           <tr>
+               <th>Course</th>
+               <th>Actions</th>
+           </tr>
+       </thead>
+       <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @item.CrsName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CrsId" class="btn btn-warning">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.CrsId" class="btn btn-secondary">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CrsId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }   
+            </tbody>
+       <table>
+
+    <div class="d-flex justify-content-around my-2">
+        <a asp-action="index" asp-controller="Admin" class="btn btn-outline-danger">Back to Admin Dashboard</a>
+        <a asp-action="Create" class="btn btn-outline-primary w-25">Add new course</a>
+    </div>
+</body>
+</html>

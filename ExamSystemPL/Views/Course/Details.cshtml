@@ -1,0 +1,42 @@
+﻿@model DAL.Models.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="modal" id="courseDetailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Model.CrsName Course Details</h4>
+                    <a asp-action="index" asp-controller="course" class="btn-close"></a>
+                </div>
+                <div class="modal-body">
+                    <p>Course ID: @Model.CrsId</p>
+                    <p>Course Name: @Model.CrsName</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <a class="btn btn-danger" asp-action="index" asp-controller="course">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#courseDetailsModal").modal("show");
+        });
+    </script>
+</body>
+</html>

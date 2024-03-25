@@ -1,0 +1,46 @@
+﻿@model DAL.Models.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<title>Delete</title>
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	</head>
+	<body>
+
+	<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Delete @Model.CrsName Course</h5>
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete this course?</p>
+				</div>
+				<div class="modal-footer">
+					<a asp-action="Index" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+					<a asp-action="confirmdelete" asp-route-id="@Model.CrsId" class="btn btn-danger">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#deleteModal').modal('show');
+		});
+	</script>
+
+	
+	</body>
+</html>

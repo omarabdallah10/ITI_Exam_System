@@ -11,6 +11,11 @@ namespace BLL.IRepository
     {
         public List<Course> GetAllCourses();
         public Course GetCourseById(int CourseId);
+        public Course GetCourseByName(string CourseName);
+        public void AddCourse(Course course);
+        public void UpdateCourse(Course course);
+        public void DeleteCourse(Course course);
+
         public List<StudentCourse> GetCoursesByStudentId(int StudentId);
         public List<Exam> GetExamsByCourseId(int CourseId);
         public List<Course> GetCoursesByInstructorId(int InstructorId);

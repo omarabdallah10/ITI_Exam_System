@@ -1,0 +1,37 @@
+﻿@model DAL.Models.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="text-center"> 
+
+	<form action="" method="post">
+		<h1 class="text-center mb-5 text-decoration-underline">Edit Course</h1>
+		<table class="table table-bordered table-hover text-center w-50 m-auto">
+			<tr>
+				<td><label asp-for="CrsName">Course Name</label></td>
+				<td>
+					<input asp-for="CrsName" asp-route-id="@Model.CrsId"/> <br />
+					<span asp-validation-for="CrsName" class="text-danger"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a asp-action="Index" class="btn btn-outline-primary w-25 mx-auto">Back To Courses</a>
+					<input type="submit" value="Update" class="btn btn-outline-primary w-50 mx-auto" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
