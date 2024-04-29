@@ -5,17 +5,17 @@ This system is built using HTML5, CSS3, Bootstrap, jQuery, ASP.NET Core MVC, C#,
 
 ## Team members
 
-- **Omar Abdallah** :
-- **Ahmed Elsharkawy**:
-- **Mohamed Hamed**:
-- **Abdelrahman Osama**:
-- **Mayar Assem**:
+- **Omar Abdallah**
+- **Ahmed Elsharkawy**
+- **Mohamed Hamed**
+- **Abdelrahman Osama**
+- **Mayar Assem**
 
 ## Features
 
-- **Exam Generation** :
-- **Exam Answering**:
-- **Exam Correction**:
+- **Exam Generation**
+- **Exam Answering**
+- **Exam Correction**
 
 ## Technologies Used
 
