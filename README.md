@@ -3,6 +3,14 @@
 ITI_Exam_System is a comprehensive online examination system designed to facilitate efficient administration and management of exams.
 This system is built using HTML5, CSS3, Bootstrap, jQuery, ASP.NET Core MVC, C#, Entity Framework Core, and LINQ to provide a seamless and user-friendly experience for both instructors and students.
 
+## Team members
+
+- **Omar Abdallah** :
+- **Ahmed Elsharkawy**:
+- **Mohamed Hamed**:
+- **Abdelrahman Osama**:
+- **Mayar Assem**:
+
 ## Features
 
 - **Exam Generation** :
